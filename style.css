@@ -165,3 +165,9 @@ footer {
     transform: translateY(-10px);
   }
 }
+.video-rotate {
+  transform: rotate(-90deg); /* ou 180deg, 270deg, -90deg */
+  transform-origin: center;
+  display: block;
+  margin: 0 auto;
+}
