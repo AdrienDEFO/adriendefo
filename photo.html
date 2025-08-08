@@ -7,29 +7,32 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="photo-page">
-  <header>
+  <header class="fade-in">
     <img src="image/1749621596408.png" alt="Ma photo" class="photo" />
     <h1>Mes Photos</h1>
     <nav>
       <ul>
         <li><a href="index.html">Accueil</a></li>
-        <li><a href="photo.html">Photos</a></li>
+        <li><a href="photo.html" class="active">Photos</a></li>
         <li><a href="video.html">Vidéos</a></li>
         <li><a href="projet.html">Projets</a></li>
         <li><a href="doc.html">Documents</a></li>
       </ul>
     </nav>
   </header>
-
   <main>
     <h2>Galerie</h2>
     <div id="photo-gallery" class="gallery"></div>
   </main>
-
-  <footer>
+  <!-- Modale d'aperçu pour photo -->
+  <div id="modal" class="modal" style="display:none;">
+    <span class="close" id="modal-close">&times;</span>
+    <img id="modal-img" src="" alt="Aperçu photo" style="display:none;"/>
+    <a id="modal-download" href="#" download class="download-btn">Télécharger</a>
+  </div>
+  <footer class="fade-in">
     <p>&copy; 2025 DEFO ANGE ADRIEN</p>
   </footer>
-
   <script src="script.js"></script>
 </body>
 </html>
