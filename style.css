@@ -1,0 +1,483 @@
+/* === Styles globaux === */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(120deg, #f9fafa 0%, #e0f7fa 100%);
+  background-size: 200% 200%;
+  color: #222;
+  animation: bodyFadeIn 1s ease-in-out forwards, gradientMove 8s ease-in-out infinite alternate;
+}
+
+@keyframes bodyFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+header {
+  background-color: #0a192f;
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
+  position: relative;
+  animation: floatHeader 6s ease-in-out infinite alternate;
+}
+@keyframes floatHeader {
+  from { transform: translateY(0px); }
+  to { transform: translateY(5px); }
+}
+
+.photo {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid white;
+  margin-bottom: 10px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+nav ul li a {
+  color: #23dafa;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+nav ul li a:hover {
+  color: #fff;
+}
+nav ul li a.active {
+  color: #fff;
+  background: #64ffda;
+  border-radius: 18px;
+  padding: 6px 18px;
+  box-shadow: 0 2px 12px rgba(100,255,218,0.13);
+  transition: background 0.3s, color 0.3s;
+}
+
+main {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 0 20px;
+  animation: fadeInUp 1.2s ease-in-out forwards;
+}
+
+section {
+  margin-bottom: 40px;
+}
+
+h2 {
+  color: #0a192f;
+  border-bottom: 2px solid #64ffda;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+  position: relative;
+  overflow: hidden;
+}
+h2::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #64ffda, #0a192f);
+  transition: width 0.5s;
+}
+h2:hover::after {
+  width: 100%;
+}
+
+ul li {
+  margin-bottom: 8px;
+}
+ul {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUpList 1s forwards;
+  animation-delay: 0.5s;
+}
+@keyframes fadeInUpList {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+footer {
+  text-align: center;
+  background-color: #0a192f;
+  color: white;
+  padding: 20px;
+  animation: fadeIn 2s ease forwards;
+}
+
+/* === Galerie photos et vidéos === */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  padding: 20px 0;
+  animation: fadeInUp 1.2s ease-in-out forwards;
+}
+
+.photo-card {
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  transition: transform 0.35s, box-shadow 0.35s;
+  background: linear-gradient(120deg, #e0f7fa 0%, #fff 100%);
+  animation: floatUp 1.5s ease forwards;
+  opacity: 0;
+  animation-delay: calc(0.2s * var(--i));
+}
+.photo-card:hover {
+  transform: scale(1.08) rotate(2deg);
+  box-shadow: 0 8px 32px rgba(100,255,218,0.25);
+}
+.photo-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  background-color: #eee;
+  border-radius: 10px;
+  animation: subtleFloat 5s ease-in-out infinite alternate;
+}
+
+/* === Animations utiles === */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s forwards;
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes floatUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes subtleFloat {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-10px);
+  }
+}
+
+/* === Modale d'aperçu === */
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(10,25,47,0.85);
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.3s;
+}
+.modal img, .modal video {
+  max-width: 90vw;
+  max-height: 70vh;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 32px rgba(100,255,218,0.25);
+}
+.close {
+  position: absolute;
+  top: 30px; right: 40px;
+  font-size: 2.5rem;
+  color: #fff;
+  cursor: pointer;
+  z-index: 10001;
+}
+.download-btn {
+  background: #ff0202;
+  color: #0a192f;
+  padding: 10px 28px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(100,255,218,0.18);
+  transition: background 0.3s, color 0.3s;
+  display: inline-block;
+}
+.download-btn:hover {
+  background: #0260ee;
+  color: #64ffda;
+}
+
+/* === Documents === */
+.doc-list {
+  list-style: none;
+  padding: 0;
+  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.doc-list a.download-btn {
+  background: #64ffda;
+  color: #0a192f;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(100,255,218,0.18);
+  transition: background 0.3s, color 0.3s;
+  display: inline-block;
+}
+.doc-list a.download-btn:hover {
+  background: #0260ee;
+  color: #fff;
+}
+
+/* === Divers === */
+a[href^="mailto:"] {
+  color: #0a192f;
+  background: #64ffda22;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: bold;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 2px 8px rgba(100,255,218,0.08);
+  text-decoration: none;
+}
+a[href^="mailto:"]:hover {
+  background: #1100fa;
+  color: #0a192f;
+  box-shadow: 0 4px 16px rgba(100,255,218,0.18);
+}
+.video-rotate {
+  transform: rotate(-90deg);
+  transform-origin: center;
+  display: block;
+  margin: 0 auto;
+}
+/* Animation sur la modale */
+.modal {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.modal.modal-open {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Animation sur les cartes */
+.photo-card {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  transition: transform 0.35s, box-shadow 0.35s, background 0.4s;
+  background: linear-gradient(120deg, #e0f7fa 0%, #fff 100%);
+  animation: floatUp 1.5s ease forwards;
+  opacity: 0;
+  animation-delay: calc(0.2s * var(--i));
+}
+.photo-card:hover {
+  transform: scale(1.12) rotate(-2deg);
+  box-shadow: 0 12px 32px rgba(100,255,218,0.25);
+  background: linear-gradient(120deg, #64ffda 0%, #e0f7fa 100%);
+}
+
+/* Animation sur le menu */
+nav ul li a.active {
+  color: #fff;
+  background: linear-gradient(90deg, #64ffda 60%, #0a192f 100%);
+  border-radius: 18px;
+  padding: 6px 18px;
+  box-shadow: 0 2px 12px rgba(100,255,218,0.13);
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Animation sur le bouton télécharger */
+.download-btn {
+  background: linear-gradient(90deg, #64ffda 60%, #0a192f 100%);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(100,255,218,0.18);
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+  display: inline-block;
+}
+.download-btn:hover {
+  background: #0260ee;
+  color: #1304f1;
+  transform: scale(1.08);
+}
+
+/* Animation sur le titre */
+h2 {
+  position: relative;
+  overflow: hidden;
+}
+h2::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #64ffda, #0a192f);
+  transition: width 0.5s;
+}
+h2:hover::after {
+  width: 100%;
+}
+/* ...existing code... */
+
+/* Animation sur la modale */
+.modal {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.modal.modal-open {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Animation sur les cartes */
+.photo-card {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  transition: transform 0.35s, box-shadow 0.35s, background 0.4s;
+  background: linear-gradient(120deg, #e0f7fa 0%, #fff 100%);
+  animation: floatUp 1.5s ease forwards;
+  opacity: 0;
+  animation-delay: calc(0.2s * var(--i));
+  text-align: center;
+}
+.photo-card:hover {
+  transform: scale(1.12) rotate(-2deg);
+  box-shadow: 0 12px 32px rgba(100,255,218,0.25);
+  background: linear-gradient(120deg, #64ffda 0%, #e0f7fa 100%);
+}
+
+/* Animation sur le menu */
+nav ul li a.active {
+  color: #fff;
+  background: linear-gradient(90deg, #64ffda 60%, #0a192f 100%);
+  border-radius: 18px;
+  padding: 6px 18px;
+  box-shadow: 0 2px 12px rgba(100,255,218,0.13);
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Animation sur le bouton télécharger */
+.download-btn {
+  background: linear-gradient(90deg, #64ffda 60%, #0a192f 100%);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(100,255,218,0.18);
+  transition: background 0.3s, color 0.3s, transform 0.2s;
+  display: inline-block;
+}
+.download-btn:hover {
+  background: #0260ee;
+  color: #64ffda;
+  transform: scale(1.08);
+}
+
+/* Animation sur le titre */
+h2 {
+  position: relative;
+  overflow: hidden;
+}
+h2::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #64ffda, #0a192f);
+  transition: width 0.5s;
+}
+h2:hover::after {
+  width: 100%;
+}
+
+/* Rotation vidéo dans la modale */
+.video-rotate {
+  transform: rotate(-90deg);
+  transform-origin: center;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Animation sur les cartes (keyframes) */
+@keyframes floatUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.modal-video {
+  transition: transform 0.3s ease;
+  transform: rotate(0deg);
+  transform-origin: center center;
+}
+
+.modal-video.rotate {
+  transform: rotate(-90deg);
+}
+/* Rotation vidéo dans la galerie et modale */
+.video-rotate {
+  transform: rotate(-90deg);
+  transform-origin: center;
+  display: block;
+  margin: 0 auto;
+}
+.video-comment {
+  text-align: center;
+  font-size: 1rem;
+  color: #047df7;
+  margin-top: 8px;
+  font-style: italic;
+}
+/* ...existing code... */
