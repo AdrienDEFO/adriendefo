@@ -129,3 +129,4 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("modal-video").pause();
     }
   };
+});
